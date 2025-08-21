@@ -7,4 +7,5 @@ export declare const apiPaths: {
     teamDonationsUrl(id: number | string, limit?: number, page?: number): string;
     teamProfileUrl(id: number | string): string;
     teamRosterUrl(id: number | string, offset?: number): string;
+    teamMilestonesUrl(id: number | string, limit?: number, page?: number): string;
 };

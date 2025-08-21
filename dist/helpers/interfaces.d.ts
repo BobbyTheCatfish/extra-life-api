@@ -56,10 +56,13 @@ export interface IExtraLifeBadge {
     unlockedDateUTC?: string;
     badgeImageURL: string;
     badgeCode: string;
+    links: {
+        page: string;
+    };
 }
 export interface IExtraLifeDonation {
     participantID: number;
-    amount: number;
+    amount?: number;
     avatarImageURL: string;
     createdDateUTC: string;
     donationID: string;
@@ -67,11 +70,28 @@ export interface IExtraLifeDonation {
     message?: string;
     teamID?: number;
     donorID?: string;
+    donorIsRecipient?: boolean;
     eventID: number;
+    incentiveID?: string;
+    isRegFee?: boolean;
+    activityPledgeMaxAmount?: number;
+    activityPledgeUnitAmount?: number;
     recipientName: string;
+    recipiantID?: string;
+    recipientImageURL: string;
     links: {
         recipient: string;
+        donate: string;
     };
+}
+export interface IExtraLifeDonor {
+    avatarImageURL: string;
+    displayName?: string;
+    donorID?: string;
+    modifiedDateUTC: string;
+    numDonations: number;
+    recipientImageURL: string;
+    sumDonations: number;
 }
 export interface IExtraLifeTeam {
     fundraisingGoal: number;

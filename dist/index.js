@@ -9,21 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTeamRoster = exports.getTeamDonations = exports.getTeamInfo = exports.getUserBadges = exports.getUserIncentives = exports.getUserMilestones = exports.getUserDonations = exports.getUserInfo = void 0;
+exports.getTeamMilestones = exports.getTeamRoster = exports.getTeamDonations = exports.getTeamInfo = exports.getUserBadges = exports.getUserIncentives = exports.getUserMilestones = exports.getUserDonations = exports.getUserInfo = void 0;
 const node_fetch_1 = require("node-fetch");
 const api_paths_1 = require("./helpers/api-paths");
-exports.getUserInfo = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getUserInfo = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         const url = api_paths_1.apiPaths.profileUrl(id);
         let userInfoJson = {};
-        node_fetch_1.default(url)
+        (0, node_fetch_1.default)(url)
             .then((res) => {
             try {
                 userInfoJson = res.json();
                 userInfoJson.avatarImageURL = 'https:' + userInfoJson.avatarImageURL;
                 userInfoJson.donateURL = `https://www.extra-life.org/index.cfm?fuseaction=donate.participant&participantID=${id}`;
                 if (userInfoJson.teamID) {
-                    exports.getTeamInfo(userInfoJson.teamID, false)
+                    (0, exports.getTeamInfo)(userInfoJson.teamID, false)
                         .then((data) => {
                         userInfoJson.teamURL = data.teamURL;
                         resolve(userInfoJson);
@@ -45,11 +45,12 @@ exports.getUserInfo = (id) => __awaiter(void 0, void 0, void 0, function* () {
         });
     });
 });
-exports.getUserDonations = (id, limit = 100, page = 1) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getUserInfo = getUserInfo;
+const getUserDonations = (id_1, ...args_1) => __awaiter(void 0, [id_1, ...args_1], void 0, function* (id, limit = 100, page = 1) {
     return new Promise((resolve, reject) => {
         const url = api_paths_1.apiPaths.userDonationUrl(id, limit, page);
         const userDonationsJson = {};
-        node_fetch_1.default(url)
+        (0, node_fetch_1.default)(url)
             .then((res) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 userDonationsJson.countDonations = parseInt(res.headers.get('num-records'), 10) || 0;
@@ -67,11 +68,12 @@ exports.getUserDonations = (id, limit = 100, page = 1) => __awaiter(void 0, void
         });
     });
 });
-exports.getUserMilestones = (id, limit = 100, page = 1) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getUserDonations = getUserDonations;
+const getUserMilestones = (id_2, ...args_2) => __awaiter(void 0, [id_2, ...args_2], void 0, function* (id, limit = 100, page = 1) {
     return new Promise((resolve, reject) => {
         const url = api_paths_1.apiPaths.userMilestonesUrl(id, limit, page);
         const userMilestonesJson = {};
-        node_fetch_1.default(url)
+        (0, node_fetch_1.default)(url)
             .then((res) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 userMilestonesJson.countMilestones = parseInt(res.headers.get('num-records'), 10) || 0;
@@ -89,11 +91,12 @@ exports.getUserMilestones = (id, limit = 100, page = 1) => __awaiter(void 0, voi
         });
     });
 });
-exports.getUserIncentives = (id, limit = 100, page = 1) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getUserMilestones = getUserMilestones;
+const getUserIncentives = (id_3, ...args_3) => __awaiter(void 0, [id_3, ...args_3], void 0, function* (id, limit = 100, page = 1) {
     return new Promise((resolve, reject) => {
         const url = api_paths_1.apiPaths.userIncentivesUrl(id, limit, page);
         const userIncentivesJson = {};
-        node_fetch_1.default(url)
+        (0, node_fetch_1.default)(url)
             .then((res) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 userIncentivesJson.countIncentives = parseInt(res.headers.get('num-records'), 10) || 0;
@@ -111,11 +114,12 @@ exports.getUserIncentives = (id, limit = 100, page = 1) => __awaiter(void 0, voi
         });
     });
 });
-exports.getUserBadges = (id, limit = 100, page = 1) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getUserIncentives = getUserIncentives;
+const getUserBadges = (id_4, ...args_4) => __awaiter(void 0, [id_4, ...args_4], void 0, function* (id, limit = 100, page = 1) {
     return new Promise((resolve, reject) => {
         const url = api_paths_1.apiPaths.userBadgesUrl(id, limit, page);
         const userBadgesJson = {};
-        node_fetch_1.default(url)
+        (0, node_fetch_1.default)(url)
             .then((res) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 userBadgesJson.countBadges = parseInt(res.headers.get('num-records'), 10) || 0;
@@ -133,11 +137,12 @@ exports.getUserBadges = (id, limit = 100, page = 1) => __awaiter(void 0, void 0,
         });
     });
 });
-exports.getTeamInfo = (id, fetchRoster = true) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getUserBadges = getUserBadges;
+const getTeamInfo = (id_5, ...args_5) => __awaiter(void 0, [id_5, ...args_5], void 0, function* (id, fetchRoster = true) {
     return new Promise((resolve, reject) => {
         const url = api_paths_1.apiPaths.teamProfileUrl(id);
         let teamInfoJson = {};
-        node_fetch_1.default(url)
+        (0, node_fetch_1.default)(url)
             .then((res) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 teamInfoJson = yield res.json();
@@ -147,7 +152,7 @@ exports.getTeamInfo = (id, fetchRoster = true) => __awaiter(void 0, void 0, void
             }
             teamInfoJson.avatarImageURL = 'http:' + teamInfoJson.avatarImageURL;
             if (fetchRoster) {
-                exports.getTeamRoster(id)
+                (0, exports.getTeamRoster)(id)
                     .then((rosterData) => {
                     teamInfoJson.members = rosterData.members.map((u) => {
                         u.URL = `https://www.extra-life.org/index.cfm?fuseaction=donorDrive.participant&participantID=${u.participantID}`;
@@ -168,11 +173,12 @@ exports.getTeamInfo = (id, fetchRoster = true) => __awaiter(void 0, void 0, void
         });
     });
 });
-exports.getTeamDonations = (id, limit = 100, page = 1) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getTeamInfo = getTeamInfo;
+const getTeamDonations = (id_6, ...args_6) => __awaiter(void 0, [id_6, ...args_6], void 0, function* (id, limit = 100, page = 1) {
     return new Promise((resolve, reject) => {
         const teamDonationsJson = {};
         const url = api_paths_1.apiPaths.teamDonationsUrl(id, limit, page);
-        node_fetch_1.default(url)
+        (0, node_fetch_1.default)(url)
             .then((res) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 teamDonationsJson.countDonations = parseInt(res.headers.get('num-records'), 10) || 0;
@@ -190,12 +196,13 @@ exports.getTeamDonations = (id, limit = 100, page = 1) => __awaiter(void 0, void
         });
     });
 });
-exports.getTeamRoster = (id, page) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getTeamDonations = getTeamDonations;
+const getTeamRoster = (id, page) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         const teamRosterJson = {};
         const offsetCalc = (page && page !== 1) ? ((page - 1) * 100) : null;
         const url = api_paths_1.apiPaths.teamRosterUrl(id, offsetCalc);
-        node_fetch_1.default(url)
+        (0, node_fetch_1.default)(url)
             .then((res) => __awaiter(void 0, void 0, void 0, function* () {
             try {
                 teamRosterJson.countMembers = parseInt(res.headers.get('num-records'), 10) || 0;
@@ -224,3 +231,27 @@ exports.getTeamRoster = (id, page) => __awaiter(void 0, void 0, void 0, function
         });
     });
 });
+exports.getTeamRoster = getTeamRoster;
+const getTeamMilestones = (id_7, ...args_7) => __awaiter(void 0, [id_7, ...args_7], void 0, function* (id, limit = 100, page = 1) {
+    return new Promise((resolve, reject) => {
+        const url = api_paths_1.apiPaths.teamMilestonesUrl(id, limit, page);
+        const teamMilestonesJson = {};
+        (0, node_fetch_1.default)(url)
+            .then((res) => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                teamMilestonesJson.countMilestones = parseInt(res.headers.get('num-records'), 10) || 0;
+                teamMilestonesJson.countPages = Math.ceil(teamMilestonesJson.countMilestones / limit);
+                teamMilestonesJson.milestones = yield res.json();
+                resolve(teamMilestonesJson);
+            }
+            catch (e) {
+                reject(e);
+            }
+        }))
+            .catch(() => {
+            console.log('Error parsing teamMilestones URL');
+            reject('There was an error trying to make your request');
+        });
+    });
+});
+exports.getTeamMilestones = getTeamMilestones;

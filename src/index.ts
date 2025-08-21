@@ -281,3 +281,33 @@ export const getTeamRoster = async (id: string | number, page?: number): Promise
             });
     });
 };
+
+/**
+ * Gets a list of a team's milestones
+ * @param id - the team ID
+ * @param limit - limit of amount results shown at once.  defaults to 100
+ * @param page - the page number to return
+ * @return result - the promise for completion of function (async)
+ */
+export const getTeamMilestones = async (id: string | number, limit: number = 100, page: number = 1): Promise<IMilestonesList> => {
+    return new Promise<IMilestonesList>((resolve, reject) => {
+        const url = apiPaths.teamMilestonesUrl(id, limit, page);
+        const teamMilestonesJson: any = {};
+
+        fetch(url)
+            .then(async (res) => {
+                try {
+                    teamMilestonesJson.countMilestones = parseInt(res.headers.get('num-records'), 10) || 0;
+                    teamMilestonesJson.countPages = Math.ceil(teamMilestonesJson.countMilestones / limit);
+                    teamMilestonesJson.milestones = await res.json();
+                    resolve(teamMilestonesJson);
+                } catch (e) {
+                    reject(e);
+                }
+            })
+            .catch(() => {
+                console.log('Error parsing teamMilestones URL');
+                reject('There was an error trying to make your request');
+            });
+        });
+    };

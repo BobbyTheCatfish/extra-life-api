@@ -58,4 +58,12 @@ exports.apiPaths = {
     teamRosterUrl(id, offset) {
         return `${DOMAIN_STUB}api/teams/${id}/participants${offset ? `?offset=${offset + 1}` : ''}`;
     },
+    teamMilestonesUrl(id, limit = 100, page = 1) {
+        if (!limit) {
+            return `${DOMAIN_STUB}api/teams/${id}/milestones`;
+        }
+        else {
+            return `${DOMAIN_STUB}api/teams/${id}/milestones?limit=${limit}&offset=${pageOffset(limit, page)}`;
+        }
+    }
 };

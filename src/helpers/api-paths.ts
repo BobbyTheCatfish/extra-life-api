@@ -60,4 +60,12 @@ export const apiPaths = {
     teamRosterUrl(id: number | string, offset?: number): string {
         return `${DOMAIN_STUB}api/teams/${id}/participants${offset ? `?offset=${offset + 1}` : ''}`;
     },
+
+    teamMilestonesUrl(id: number | string, limit: number = 100, page: number = 1): string {
+        if (!limit) {
+            return `${DOMAIN_STUB}api/teams/${id}/milestones`;
+        } else {
+            return `${DOMAIN_STUB}api/teams/${id}/milestones?limit=${limit}&offset=${pageOffset(limit, page)}`;
+        }
+    }
 };
